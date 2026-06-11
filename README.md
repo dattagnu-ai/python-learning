@@ -41,7 +41,7 @@ python-learning
 ## 💻 Learning Progress
 
 - [x] Python Basics
-- [ ] Strings
+- [x] Strings
 - [ ] Conditional Statements
 - [ ] Loops
 - [ ] Functions
