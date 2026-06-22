@@ -6,7 +6,7 @@ print(t.index(6))  # indexing which index no having 6
 # Q2
 t = (10, 20, 30, 40, 50)
 print(t[1:4])  # positive index start no 1 and end is 4
-print(t[-2:])  # negative index start no -2 and end 1
+print(t[-2:]) # start from index -2 (40) to end of tuple
 
 # Q3
 t1 = (1, 2, 3)
@@ -22,5 +22,5 @@ print(t)  # ([1,2,99],[3,4])
 
 # Q5
 t = (5, 10, 15, 20)
-print(t[::2])  # [5,15]
+print(t[::2])  # (5,15)
 print(t[::-1])  # (20, 15, 10, 5)
