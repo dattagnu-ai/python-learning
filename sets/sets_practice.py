@@ -12,8 +12,8 @@ A = {1, 2, 3, 4}
 B = {3, 4, 5, 6}
 print(A | B)  # {1,2,3,4,5,6}:-Union
 print(A & B)  # {3,4}:-intersection finding a common elements
-print(A - B)  # {1,2}:-finding a difference in b
-print(B - A)  # {5,6}:-finding a difference in a
+print(A - B)  # {1,2} — elements in A but not in B
+print(B - A)  # {5,6} — elements in B but not in A
 
 # Add() Function
 
