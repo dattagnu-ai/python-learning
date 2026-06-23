@@ -1,9 +1,10 @@
 # Discard and Remove
 
+# Q1
 s = {1, 2, 3, 4, 5}
-s.discard(3)  # deleting a number 3 {1,2,4,5}
-s.remove(6)  # Error
-print(s)  # KeyError
+s.discard(3)  # 3 removed, no error even if not present
+s.remove(6)   # KeyError — 6 not in set, execution stops here
+print(s)      # this line never runs
 
 # Union, Intersection and Difference
 
@@ -35,5 +36,5 @@ print(type(s1 & s2))  # <class 'set'> showing a type
 # Update
 
 s = {1, 2, 3}
-s.update({3, 4, 5})  # adding a element here not allow a like append() function
+s.update({3, 4, 5})  # adds multiple elements at once, unlike add() which adds only one
 print(s)  # {1,2,3,4,5}
