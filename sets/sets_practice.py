@@ -30,7 +30,7 @@ print(len(s))  # 3 measuring a length
 s1 = {1, 2, 3}
 s2 = frozenset({3, 4, 5})
 print(s1 & s2)  # {3}:=intersection rule finding a common element
-print(type(s1 & s2))  # <class 'set'> — result is set, not frozenset
+print(type(s1 & s2)) # <class 'set'> — when set & frozenset, result is set
 
 # Update
 
