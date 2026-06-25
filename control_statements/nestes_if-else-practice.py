@@ -26,7 +26,7 @@ else:
     print("User not found")
 
 
-# checks loan eligibility by evaluating age and salart
+# checks loan eligibility by evaluating age and salary
 
 age = int(input("Enter Age:- "))
 
