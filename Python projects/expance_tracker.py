@@ -3,10 +3,21 @@ from datetime import datetime
 
 class Expense:
     def __init__(self, category, description, amount, date):
-        self.category = category.strip().capitalize()
-        self.amount = float(amount)
-        self.description = description.strip().capitalize()
-        self.date = date if date else datetime.now().strftime("%d-%m-%Y")
+        self.category = category.strip().capitalize() if category.strip() else "Other"
+        try:
+            self.amount = float(amount)
+        except ValueError:
+            self.amount = 0.0
+
+        self.description = (
+            description.strip().capitalize()
+            if description.strip()
+            else "No description"
+        )
+
+        self.date = (
+            date.strip() if date.strip() else datetime.now().strftime("%d-%m-%Y")
+        )
 
     def display(self, count):
         print(
@@ -16,7 +27,7 @@ class Expense:
 
 class ExpenseTracker:
     def __init__(self):
-        self.expense = []
+        self.expenses = []
 
     def add_expense(self):
         category = input("Enter Category:- ")
@@ -25,18 +36,18 @@ class ExpenseTracker:
         date = input("Enter Date:- ")
 
         new_expense = Expense(category, description, amount, date)
-        self.expense.append(new_expense)
+        self.expenses.append(new_expense)
         print("🎉 Expense added successfully!")
 
     def view_expense(self):
-        if not self.expense:
+        if not self.expenses:
             print("📭 No expenses found.")
         else:
             print(
                 f"{'No':<4}{'Category':<12} {'Description':<15} {'Amount':<10} Rs {'Date'}"
             )
             print("-" * 55)
-            for index, i in enumerate(self.expense, start=1):
+            for index, i in enumerate(self.expenses, start=1):
                 i.display(index)
 
     def search_expense(self, search):
@@ -46,8 +57,8 @@ class ExpenseTracker:
             return
         sear = search.strip().capitalize()
         count = 0
-        for s in self.expense:
-            if sear == s.description:
+        for expense in self.expenses:
+            if sear == expense.category or sear == expense.description:
                 if not found:
                     print(
                         f"{'No':<4}{'Category':<12} {'Description':<15} {'Amount':<10} Rs {'Date'}"
@@ -55,26 +66,26 @@ class ExpenseTracker:
                     print("-" * 55)
                     found = True
                 count += 1
-                s.display(count)
+                expense.display(count)
 
         if not found:
             print("❌ No matching expense found.")
 
     def total_expense(self):
-        if not self.expense:
+        if not self.expenses:
             print("📭 No expenses to calculate.")
             return
         total = 0
-        for i in self.expense:
-            total = total + i.amount
-        print(f"💰 Total Expense:- {total}")
+        for expense in self.expenses:
+            total = total + expense.amount
+        print(f"💰 Total Expense:- {total:.2f}")
 
     def delete_expense(self, delete):
-        if delete <= 0 or delete > len(self.expense):
+        if delete <= 0 or delete > len(self.expenses):
             print("⚠️ Please enter a valid expense number.")
             return
         index = delete - 1
-        self.expense.pop(index)
+        self.expenses.pop(index)
         print("✅ Expense deleted successfully!")
 
     def exit(self):
@@ -112,8 +123,11 @@ def main():
             elif choice == 4:
                 expense.total_expense()
             elif choice == 5:
-                c = int(input("🗑️ Enter expense NO. to Delete:- "))
-                expense.delete_expense(c)
+                try:
+                    c = int(input("🗑️ Enter expense NO. to Delete:- "))
+                    expense.delete_expense(c)
+                except ValueError:
+                    print("⚠️ Please enter valid number")
             elif choice == 6:
                 expense.exit()
                 break
