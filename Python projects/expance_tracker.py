@@ -1,4 +1,6 @@
 from datetime import datetime
+import json
+import os
 
 
 class Expense:
@@ -24,10 +26,20 @@ class Expense:
             f"{count}: {self.category:<12} {self.description:<15} {self.amount:<10} Rs {self.date}"
         )
 
+    def dict(self):
+        return {
+            "Category": self.category,
+            "Description": self.description,
+            "Amount": self.amount,
+            "Date": self.date,
+        }
+
 
 class ExpenseTracker:
     def __init__(self):
         self.expenses = []
+        self.file_name = "Expense_tracker.json"
+        self.load_expense()
 
     def add_expense(self):
         category = input("Enter Category:- ")
@@ -38,10 +50,11 @@ class ExpenseTracker:
         new_expense = Expense(category, description, amount, date)
         self.expenses.append(new_expense)
         print("🎉 Expense added successfully!")
+        self.save_expense()
 
     def view_expense(self):
         if not self.expenses:
-            print("📭 No expenses found.")
+            print("📭  No expenses found.")
         else:
             print(
                 f"{'No':<4}{'Category':<12} {'Description':<15} {'Amount':<10} Rs {'Date'}"
@@ -86,10 +99,34 @@ class ExpenseTracker:
             return
         index = delete - 1
         self.expenses.pop(index)
+        self.save_expense()
         print("✅ Expense deleted successfully!")
 
     def exit(self):
         print("Thanks for using Expense Tracker! 👋")
+
+    def load_expense(self):
+        if os.path.exists(self.file_name):
+            try:
+                with open(self.file_name, "r") as file:
+                    raw_data = json.load(file)
+                    self.expenses = [
+                        Expense(
+                            item["Category"],
+                            item["Description"],
+                            item["Amount"],
+                            item["Date"],
+                        )
+                        for item in raw_data
+                    ]
+            except (json.JSONDecodeError, KeyError):
+                print("⚠️ Warning: Data file corrupted or empty. Starting fresh.")
+                self.expenses = []
+
+    def save_expense(self):
+        with open(self.file_name, "w") as file:
+            serializable_data = [expense.dict() for expense in self.expenses]
+            json.dump(serializable_data, file, indent=4)
 
 
 def main():
@@ -124,7 +161,7 @@ def main():
                 expense.total_expense()
             elif choice == 5:
                 try:
-                    c = int(input("🗑️ Enter expense NO. to Delete:- "))
+                    c = int(input("🗑️   Enter expense NO. to Delete:- "))
                     expense.delete_expense(c)
                 except ValueError:
                     print("⚠️ Please enter valid number")
