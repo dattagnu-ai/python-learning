@@ -1,0 +1,14 @@
+[
+    {
+        "Category": "Travel",
+        "Description": "Shirdi",
+        "Amount": 7000.0,
+        "Date": "23-10-2026"
+    },
+    {
+        "Category": "Enjoy",
+        "Description": "Friend party",
+        "Amount": 4500.0,
+        "Date": "10-09-2026"
+    }
+]

@@ -1,0 +1,1 @@
+python -u "c:\PYTHON JOURNY\Assignment 4\task2.py"Hello python!
